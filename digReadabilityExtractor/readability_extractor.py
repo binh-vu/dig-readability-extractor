@@ -29,7 +29,7 @@ class ReadabilityExtractor(Extractor):
         return self
 
     def extract(self, doc):
-        from digReadabilityExtractor.readability.readability import Document
+        from readability.readability import Document
         from bs4 import BeautifulSoup
         try:
             if 'html' in doc:
