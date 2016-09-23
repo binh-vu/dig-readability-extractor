@@ -1,30 +1,55 @@
-from digExtractor.curry import curry
-from digExtractor.extractor import extract
+from digExtractor.extractor import Extractor
 from itertools import ifilter
+import copy 
 
-@curry
-def readability_extractor(input, 
-	recallPriority=True,
-	htmlPartial=False):
-  from digReadabilityExtractor.readability.readability import Document
-  from bs4 import BeautifulSoup
-  try:
-        if 'html' in input:
-            html = input['html']
-            readable = Document(html,recallPriority=recallPriority).summary(html_partial=htmlPartial)
-            cleantext = BeautifulSoup(readable.encode('utf-8'), 'lxml').strings
-            readability_text = ' '.join(cleantext)
-            return readability_text
-        else:
+class ReadabilityExtractor(Extractor):
+
+    def __init__(self):
+        self.renamed_input_fields = 'html'
+        self.recall_priority=True
+        self.html_partial=False
+        self.metadata = {'extractor': "readability",\
+                            'recall_priority': self.recall_priority,\
+                             'html_partial': self.html_partial}
+
+    def get_recall_priority(self):
+        self.recall_priority
+
+    def set_recall_priority(self, recall_priority):
+        self.recall_priority = recall_priority
+        self.metadata['recall_priority'] = recall_priority
+        return self
+
+    def get_html_partial(self):
+        self.recall_priority
+
+    def set_html_partial(self, html_partial):
+        self.html_partial = html_partial
+        self.metadata['html_partial'] = html_partial
+        return self
+
+    def extract(self, doc):
+        from digReadabilityExtractor.readability.readability import Document
+        from bs4 import BeautifulSoup
+        try:
+            if 'html' in doc:
+                html = doc['html']
+                readable = Document(html,recallPriority=self.recall_priority).summary(html_partial=self.html_partial)
+                cleantext = BeautifulSoup(readable.encode('utf-8'), 'lxml').strings
+                readability_text = ' '.join(cleantext)
+                return readability_text
+            else:
+                return ''
+        except Exception, e:
+            print 'Error in extracting readability %s' % e
             return ''
-  except Exception, e:
-        print 'Error in extracting readability %s' % e
-        return ''
 
+    def get_metadata(self):
+        return copy.copy(self.metadata)
 
-def get_readability_extractor(recallPriority=True,
-	htmlPartial=False):
-	return extract(renamed_input_fields = ['html'], 
-			extractor =readability_extractor(recallPriority=recallPriority,
-				htmlPartial=htmlPartial))
+    def set_metadata(self, metadata):
+        self.metadata = metadata
+        return self
 
+    def get_renamed_input_fields(self):
+        return self.renamed_input_fields;

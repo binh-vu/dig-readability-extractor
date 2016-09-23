@@ -5,8 +5,8 @@ import codecs
 import unittest
 
 import json
-import pygtrie as trie
-from digReadabilityExtractor.readability_extractor import get_readability_extractor
+from digReadabilityExtractor.readability_extractor import ReadabilityExtractor
+from digExtractor.extractor_processor import ExtractorProcessor
 
 class TestReadabilityExtractor(unittest.TestCase):
 
@@ -19,9 +19,10 @@ class TestReadabilityExtractor(unittest.TestCase):
         dig_html = self.load_file("dig.html")
         dig_text = self.load_file("dig.txt")
         doc = {"foo": dig_html}
-    	readability_extract = get_readability_extractor()
-    	updated_doc = readability_extract(doc, 'extracted', ['foo'])
-    	self.assertEquals(updated_doc['extracted'], dig_text)
+    	e = ReadabilityExtractor()
+        ep = ExtractorProcessor().set_input_fields('foo').set_output_field('extracted').set_extractor(e)
+    	updated_doc = ep.extract(doc)
+    	self.assertEquals(updated_doc['extracted']['value'], dig_text)
 
 
 if __name__ == '__main__':
