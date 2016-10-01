@@ -10,11 +10,11 @@ config = {
     'url': 'https://github.com/usc-isi-i2/dig-readability-extractor',
     'download_url': 'https://github.com/usc-isi-i2/dig-readability-extractor',
     'author_email': 'jasonslepicka@gmail.com',
-    'version': '0.1.3',
+    'version': '0.1.4',
     # these are the subdirs of the current directory that we care about
     'packages': ['digReadabilityExtractor', 'digReadabilityExtractor.readability'],
     'scripts': [],
-    'install_requires': ['digExtractor>=0.1.5','lxml>=3.6.0','beautifulsoup4>=4.3','cssselect','chardet']
+    'install_requires': ['digExtractor>=0.1.8','lxml>=3.6.0','beautifulsoup4>=4.3','cssselect','chardet']
 }
 
 setup(**config)

@@ -9,15 +9,15 @@ class ReadabilityExtractor(Extractor):
         self.recall_priority=True
         self.html_partial=False
         self.metadata = {'extractor': "readability",\
-                            'recall_priority': self.recall_priority,\
-                             'html_partial': self.html_partial}
+                            'recall_priority': str(self.recall_priority),\
+                             'html_partial': str(self.html_partial)}
 
     def get_recall_priority(self):
         self.recall_priority
 
     def set_recall_priority(self, recall_priority):
         self.recall_priority = recall_priority
-        self.metadata['recall_priority'] = recall_priority
+        self.metadata['recall_priority'] = str(recall_priority)
         return self
 
     def get_html_partial(self):
@@ -25,7 +25,7 @@ class ReadabilityExtractor(Extractor):
 
     def set_html_partial(self, html_partial):
         self.html_partial = html_partial
-        self.metadata['html_partial'] = html_partial
+        self.metadata['html_partial'] = str(html_partial)
         return self
 
     def extract(self, doc):
