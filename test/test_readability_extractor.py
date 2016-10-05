@@ -22,7 +22,7 @@ class TestReadabilityExtractor(unittest.TestCase):
     	e = ReadabilityExtractor()
         ep = ExtractorProcessor().set_input_fields('foo').set_output_field('extracted').set_extractor(e)
     	updated_doc = ep.extract(doc)
-    	self.assertEquals(updated_doc['extracted']['value'], dig_text)
+    	self.assertEquals(updated_doc['extracted'][0]['value'], dig_text)
 
 
 if __name__ == '__main__':
